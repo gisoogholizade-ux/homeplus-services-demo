@@ -22,7 +22,10 @@
         --green: #24a86b;
         --radius-lg: 20px;
         --radius-md: 13px;
-        --shadow-card: 0 10px 26px #1c3f700f
+        --shadow-card: 0 10px 26px #1c3f700f;
+        --glass-shadow: 0 20px 54px rgba(30, 58, 105, .16);
+        --glass-border: rgba(255, 255, 255, .55);
+        --glass-border-dark: rgba(255, 255, 255, .16)
     }
 
     * {
@@ -38,7 +41,8 @@
         font-family: 'IBM Plex Sans Arabic', Tahoma, sans-serif;
         background: var(--paper);
         color: var(--ink);
-        font-weight: 400
+        font-weight: 400;
+        overflow-x: hidden
     }
 
     a {
@@ -59,9 +63,10 @@
         position: sticky;
         top: 0;
         z-index: 50;
-        background: #f5f9fde9;
-        backdrop-filter: blur(18px);
-        border-bottom: 1px solid #dfe8f188
+        background: linear-gradient(120deg, rgba(233, 242, 255, .6), rgba(247, 248, 250, .55));
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid rgba(255, 255, 255, .5)
     }
 
     .navin {
@@ -89,27 +94,33 @@
     }
 
     .btn {
-        border: 0;
+        border: 1px solid rgba(59, 111, 224, .35);
         cursor: pointer;
-        background: var(--blue);
-        color: #fff;
+        background: linear-gradient(135deg, rgba(59, 111, 224, .22), rgba(127, 212, 221, .18));
+        backdrop-filter: blur(14px) saturate(160%);
+        -webkit-backdrop-filter: blur(14px) saturate(160%);
+        color: var(--navy);
         padding: 12px 18px;
         border-radius: var(--radius-md);
         font-weight: 500;
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        box-shadow: 0 8px 22px rgba(59, 111, 224, .14);
         transition: .2s
     }
 
     .btn:hover {
-        background: #2668e0
+        background: linear-gradient(135deg, rgba(59, 111, 224, .32), rgba(127, 212, 221, .26));
+        border-color: rgba(59, 111, 224, .5)
     }
 
     .btn.ghost {
-        background: #fff;
+        background: rgba(255, 255, 255, .5);
+        backdrop-filter: blur(10px);
         color: var(--ink);
-        border: 1px solid var(--line)
+        border: 1px solid var(--line);
+        box-shadow: none
     }
 
     .btn.ghost:hover {
@@ -117,8 +128,40 @@
     }
 
     .hero {
+        position: relative;
+        overflow: hidden;
         padding: 72px 0 46px;
         background: linear-gradient(180deg, #eef2f8, #f7f8fa 70%)
+    }
+
+    .hero::before, .hero::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(64px);
+        z-index: 0;
+        pointer-events: none
+    }
+
+    .hero::before {
+        width: 420px;
+        height: 420px;
+        background: radial-gradient(circle at 30% 30%, rgba(59, 111, 224, .32), transparent 70%);
+        top: -130px;
+        left: -90px
+    }
+
+    .hero::after {
+        width: 380px;
+        height: 380px;
+        background: radial-gradient(circle at 70% 70%, rgba(127, 212, 221, .32), transparent 70%);
+        bottom: -150px;
+        right: -70px
+    }
+
+    .hero .wrap {
+        position: relative;
+        z-index: 1
     }
 
     .grid {
@@ -151,11 +194,14 @@
     }
 
     .heroCard {
-        background: var(--navy);
-        color: #fff;
+        background: linear-gradient(160deg, rgba(255, 255, 255, .62), rgba(222, 235, 255, .38));
+        backdrop-filter: blur(26px) saturate(180%);
+        -webkit-backdrop-filter: blur(26px) saturate(180%);
+        color: var(--ink);
+        border: 1px solid var(--glass-border);
         border-radius: var(--radius-lg);
         padding: 22px;
-        box-shadow: 0 16px 40px #1c335020
+        box-shadow: var(--glass-shadow)
     }
 
     .status {
@@ -170,14 +216,14 @@
     }
 
     .status small {
-        color: #9eb0c7
+        color: var(--muted)
     }
 
     .live {
         display: inline-flex;
         align-items: center;
         gap: 7px;
-        color: #c7ebd8;
+        color: #1a8f5a;
         font-size: 11px
     }
 
@@ -205,20 +251,23 @@
 
     .mini div {
         padding: 12px;
-        background: var(--navy-2);
-        border: 1px solid var(--navy-line);
+        background: rgba(255, 255, 255, .5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(59, 111, 224, .22);
         border-radius: var(--radius-md);
         text-align: center
     }
 
     .mini b {
         display: block;
-        font-weight: 600
+        font-weight: 600;
+        color: var(--navy)
     }
 
     .mini span {
         font-size: 10px;
-        color: #9eafc2
+        color: var(--muted)
     }
 
     .section {
@@ -272,7 +321,10 @@
         border-radius: 13px;
         display: grid;
         place-items: center;
-        background: #e9f2ff;
+        background: linear-gradient(135deg, rgba(59, 111, 224, .18), rgba(127, 212, 221, .18));
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(59, 111, 224, .22);
         font-size: 21px
     }
 
@@ -318,9 +370,33 @@
     }
 
     .panel.dark {
-        background: var(--navy);
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(165deg, rgba(0, 54, 117, 0.58), rgba(49, 47, 108, 0.25));
+        backdrop-filter: blur(26px) saturate(160%);
+        -webkit-backdrop-filter: blur(26px) saturate(160%);
         color: #fff;
-        border-color: var(--navy)
+        border: 1px solid var(--glass-border-dark);
+        box-shadow: var(--glass-shadow)
+    }
+
+    .panel.dark::before {
+        content: '';
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(127, 212, 221, .38), transparent 70%);
+        filter: blur(54px);
+        top: -90px;
+        right: -70px;
+        z-index: 0;
+        pointer-events: none
+    }
+
+    .panel.dark > * {
+        position: relative;
+        z-index: 1
     }
 
     .form {
@@ -348,8 +424,10 @@
     }
 
     .estimate {
-        background: #eef5ff;
-        border: 1px solid #d5e5fb;
+        background: linear-gradient(135deg, rgba(59, 111, 224, .12), rgba(127, 212, 221, .10));
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(59, 111, 224, .24);
         border-radius: var(--radius-md);
         padding: 16px;
         line-height: 2;
@@ -372,9 +450,11 @@
         gap: 12px;
         align-items: flex-start;
         padding: 13px;
-        border: 1px solid var(--navy-line);
+        border: 1px solid var(--glass-border-dark);
         border-radius: var(--radius-md);
-        background: var(--navy-2)
+        background: rgba(255, 255, 255, .08);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px)
     }
 
     .track i {
@@ -384,8 +464,8 @@
         border-radius: 50%;
         display: grid;
         place-items: center;
-        background: #1f3652;
-        color: var(--cyan);
+        background: rgba(255, 255, 255, .12);
+        color:#e6fcff;
         font-style: normal;
         font-weight: 600;
         font-size: 13px
@@ -454,7 +534,9 @@
         left: 14px;
         bottom: 14px;
         z-index: 40;
-        background: #0f1b2ddd;
+        background: rgba(15, 27, 45, .55);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         border: 1px solid #fff2;
         color: #fff;
         padding: 8px 11px;
@@ -526,7 +608,9 @@
             </div>
             <div class="heroCard">
                 <div class="status">
-                    <div><b>هوم‌پلاس</b><small>Marketplace Demo</small></div>
+                    <div><b>هوم‌پلاس</b>
+                    </div>
+<!--                    <small>Marketplace Demo</small>-->
                     <span class="live"><i></i> ۱۲ متخصص آنلاین</span></div>
                 <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1000&q=86"
                      alt="خدمات منزل">
@@ -540,7 +624,7 @@
     </section>
     <section class="section" id="services">
         <div class="wrap">
-            <div class="head">
+            <div class="head" style="max-width: fit-content;">
                 <div><span class="eyebrow">SELECT SERVICE</span>
                     <h2>چه خدمتی لازم داری؟</h2></div>
                 <p>هر کارت به فرم سفارش متصل است. انتخاب خدمت، تعرفه پایه را در برآورد هزینه لحاظ می‌کند.</p></div>
@@ -610,13 +694,13 @@
                     <div class="success" id="success">سفارش آزمایشی با کد HP-5824 ثبت شد.</div>
                 </form>
             </div>
-            <div class="panel dark"><span class="eyebrow" style="color:var(--cyan)">ORDER TRACKING</span>
+            <div class="panel dark"><span class="eyebrow" style="color:#d2edf0">ORDER TRACKING</span>
                 <h2>پیگیری وضعیت</h2>
-                <p style="color:#9fb1c5;line-height:1.9">در محصول واقعی، مشتری بعد از ورود می‌تواند سفارش، متخصص، زمان
+                <p style="color:#fff;line-height:1.9">در محصول واقعی، مشتری بعد از ورود می‌تواند سفارش، متخصص، زمان
                     حضور و فاکتور را دنبال کند.</p>
                 <div class="tracking">
                     <div class="track"><i>✓</i>
-                        <div><b>درخواست ثبت شد</b><span>اطلاعات سفارش دریافت شد.</span></div>
+                        <div><b>درخواست ثبت شد</b><span style="color: #cfd8e3;">اطلاعات سفارش دریافت شد.</span></div>
                     </div>
                     <div class="track"><i>2</i>
                         <div><b>در انتظار تخصیص متخصص</b><span>سیستم مناسب‌ترین متخصص را انتخاب می‌کند.</span></div>
@@ -658,34 +742,36 @@
 <footer class="footer">
     <div class="wrap">FourDevs • Home Services Product Demo • Order Flow / Estimation / Tracking</div>
 </footer>
-<script>const cards = [...document.querySelectorAll('.service')], sel = document.getElementById('service'),
-    area = document.getElementById('area'), estimate = document.getElementById('estimate');
-cards.forEach(c => c.onclick = () => {
-    cards.forEach(x => x.classList.remove('active'));
-    c.classList.add('active');
-    sel.value = c.dataset.name;
-    calc();
-    document.getElementById('order').scrollIntoView({behavior: 'smooth'})
-});
+<script>
+    const cards = [...document.querySelectorAll('.service')], sel = document.getElementById('service'),
+        area = document.getElementById('area'), estimate = document.getElementById('estimate');
+    cards.forEach(c => c.onclick = () => {
+        cards.forEach(x => x.classList.remove('active'));
+        c.classList.add('active');
+        sel.value = c.dataset.name;
+        calc();
+        document.getElementById('order').scrollIntoView({behavior: 'smooth'})
+    });
 
-function calc() {
-    const opt = sel.options[sel.selectedIndex];
-    const base = +(opt?.dataset?.base || 0);
-    if (!base) {
-        estimate.textContent = 'یک خدمت انتخاب کن تا برآورد هزینه نمایش داده شود.';
-        return
+    function calc() {
+        const opt = sel.options[sel.selectedIndex];
+        const base = +(opt?.dataset?.base || 0);
+        if (!base) {
+            estimate.textContent = 'یک خدمت انتخاب کن تا برآورد هزینه نمایش داده شود.';
+            return
+        }
+        const a = Math.max(20, +area.value || 80);
+        const extra = sel.value === 'نظافت منزل' ? Math.max(0, a - 80) * 3 : 0;
+        const low = base + extra, high = Math.round(low * 1.25);
+        estimate.innerHTML = `برآورد اولیه برای <b>${sel.value}</b><br><b>${low.toLocaleString('fa-IR')} تا ${high.toLocaleString('fa-IR')} هزار تومان</b><br><span style="color:#718197">قیمت نهایی بعد از بررسی جزئیات مشخص می‌شود.</span>`
     }
-    const a = Math.max(20, +area.value || 80);
-    const extra = sel.value === 'نظافت منزل' ? Math.max(0, a - 80) * 3 : 0;
-    const low = base + extra, high = Math.round(low * 1.25);
-    estimate.innerHTML = `برآورد اولیه برای <b>${sel.value}</b><br><b>${low.toLocaleString('fa-IR')} تا ${high.toLocaleString('fa-IR')} هزار تومان</b><br><span style="color:#718197">قیمت نهایی بعد از بررسی جزئیات مشخص می‌شود.</span>`
-}
 
-sel.onchange = calc;
-area.oninput = calc;
-document.getElementById('orderForm').onsubmit = e => {
-    e.preventDefault();
-    document.getElementById('success').style.display = 'block'
-};</script>
+    sel.onchange = calc;
+    area.oninput = calc;
+    document.getElementById('orderForm').onsubmit = e => {
+        e.preventDefault();
+        document.getElementById('success').style.display = 'block'
+    };
+</script>
 </body>
 </html>
